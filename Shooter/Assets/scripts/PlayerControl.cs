@@ -9,9 +9,20 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     private Camera mainCam;
     private Vector3 offset;
+
+    private float maxleft;
+    private float maxright; 
+    private float maxdown;
+    private float maxup;
     void Start()
     {
-        mainCam= Camera.main;   
+        mainCam= Camera.main;
+        maxleft = mainCam.ViewportToWorldPoint(new Vector2(0.15f, 0)).x;
+        maxright = mainCam.ViewportToWorldPoint(new Vector2(0.85f, 0)).x;
+
+        maxdown = mainCam.ViewportToWorldPoint(new Vector2(0, 0.05f)).y;
+        maxup = mainCam.ViewportToWorldPoint(new Vector2(0, 0.6f)).y;
+    
     }
 
     // Update is called once per frame
@@ -40,6 +51,8 @@ public class PlayerControl : MonoBehaviour
             
             
             }
+
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, maxleft, maxright), Mathf.Clamp(transform.position.y,maxdown,maxup),0);
 
         }
     }
